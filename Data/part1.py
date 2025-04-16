@@ -25,6 +25,10 @@ print(df)
 # csv read
 df = pd.read_csv('apartments.csv')
 
+df['age'] = 2025 - df['year_built'] # computed column
+
+df = df.sort_values(by='age')
+
 # csv write
 df.to_csv('output.csv', index=False)
 

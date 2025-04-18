@@ -29,6 +29,9 @@ df['age'] = 2025 - df['year_built'] # computed column
 
 df = df.sort_values(by='age')
 
+filtered_df = df[df['age'] > 10]
+print("Filtered: ", filtered_df)
+
 # csv write
 df.to_csv('output.csv', index=False)
 
@@ -47,3 +50,4 @@ df.info()
 
 print("\nDescribe:")
 print(df.describe())
+

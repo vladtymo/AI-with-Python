@@ -1,15 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# fig = plt.figure()  # створює порожню фігуру
-
-# fig, ax = plt.subplots()  # створює фігуру з однією віссю
-
-# ax.plot([1, 2, 3], [4, 5, 6])  # малює лінійний графік
-
 # графіків функцій
 x = np.linspace(-10, 10, 500)
-y = np.sin(x)
+y = np.sin(x) ** 2
 
 plt.plot(x, y)
 plt.title("Графік функції sin(x)")
@@ -30,14 +24,16 @@ plt.show()
 # Pie Chart
 labels = ['Python', 'Java', 'C++', 'JavaScript']
 sizes = [40, 25, 20, 15]
+myexplode = [0.1, 0, 0, 0]
 
-plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, explode=myexplode)
 plt.title("Популярність мов програмування")
 plt.axis('equal')  # рівні осі для круга
+plt.legend()
 plt.show()
 
 # Scatter plot
-x = np.random.rand(100)
+x = np.random.rand(100) 
 y = np.random.rand(100)
 
 plt.scatter(x, y, color='green')
@@ -64,8 +60,6 @@ data2 = np.random.rand(len(years))
 
 diabete = {key: val for key,val in zip(years, data1)}
 not_diabete = {key: val for key,val in zip(years, data2)}
-
-
 
 ##the actual graph:
 fig, ax = plt.subplots(figsize = (10,4))

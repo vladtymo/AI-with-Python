@@ -27,7 +27,7 @@ df = pd.read_csv('apartments.csv')
 
 df['age'] = 2025 - df['year_built'] # computed column
 
-df = df.sort_values(by='age')
+df = df.sort_values(by='age', ascending=False) # sort by age
 
 filtered_df = df[df['age'] > 10]
 print("Filtered: ", filtered_df)
@@ -51,3 +51,4 @@ df.info()
 print("\nDescribe:")
 print(df.describe())
 
+# desribe: 20x5 22.5 25 27.5 30x1

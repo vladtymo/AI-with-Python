@@ -1,82 +1,59 @@
-import matplotlib.pyplot as plt
+# 1
 import numpy as np
-
-# графіків функцій
-x = np.linspace(-10, 10, 500)
-y = np.sin(x) ** 2
-
-plt.plot(x, y)
-plt.title("Графік функції sin(x)")
-plt.xlabel("x")
-plt.ylabel("sin(x)")
+import matplotlib.pyplot as plt
+ 
+x = np.linspace(-2 * np.pi, 2 * np.pi, 500)
+ 
+f = np.sin(x)
+g = np.cos(x)
+h = np.sin(x) + np.cos(x)
+ 
+ 
+plt.figure(figsize=(10, 6))
+plt.plot(x, f, label='f(x) = sin(x)', color='blue')
+plt.plot(x, g, label='g(x) = cos(x)', color='green')
+plt.plot(x, h, label='h(x) = sin(x) + cos(x)', color='red')
+ 
+plt.title('Графіки функцій f(x), g(x), h(x)')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.grid(True)
+ 
+plt.show()
+ 
+ 
+# 2
+np.random.seed(42)
+ 
+group_A = np.random.normal(loc=70, scale=10, size=100)
+group_B = np.random.normal(loc=80, scale=5, size=100)
+group_C = np.random.normal(loc=65, scale=15, size=100)
+ 
+data = [group_A, group_B, group_C]
+labels = ['Група A', 'Група B', 'Група C']
+ 
+plt.figure(figsize=(8, 6))
+plt.boxplot(data, labels=labels, patch_artist=True,
+            boxprops=dict(facecolor="lightblue"),
+            medianprops=dict(color="red"))
+ 
+plt.title("Box-plot оцінок для трьох груп студентів")
+plt.ylabel("Оцінка")
 plt.grid(True)
 plt.show()
-
-# гістограм розподілу змінних
-data = np.random.randn(1000)
-
-plt.hist(data, bins=30, color='skyblue', edgecolor='black')
-plt.title("Гістограма розподілу")
-plt.xlabel("Значення")
-plt.ylabel("Частота")
-plt.show()
-
-# Pie Chart
-labels = ['Python', 'Java', 'C++', 'JavaScript']
-sizes = [40, 25, 20, 15]
-myexplode = [0.1, 0, 0, 0]
-
-plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, explode=myexplode)
-plt.title("Популярність мов програмування")
-plt.axis('equal')  # рівні осі для круга
-plt.legend()
-plt.show()
-
-# Scatter plot
-x = np.random.rand(100) 
-y = np.random.rand(100)
-
-plt.scatter(x, y, color='green')
-plt.title("Точкова діаграма")
-plt.xlabel("X")
-plt.ylabel("Y")
-plt.show()
-
-# Bar-plot діаграми
-categories = ['A', 'B', 'C', 'D']
-values = [23, 45, 12, 36]
-
-plt.bar(categories, values, color='orange')
-plt.title("Bar Plot приклад")
-plt.xlabel("Категорія")
-plt.ylabel("Значення")
-plt.show()
-
-# xtiks rotate
-##generating some data
-years = [1936, 1945]+[i for i in range(1947,1997)]
-data1 = np.random.rand(len(years))
-data2 = np.random.rand(len(years))
-
-diabete = {key: val for key,val in zip(years, data1)}
-not_diabete = {key: val for key,val in zip(years, data2)}
-
-##the actual graph:
-fig, ax = plt.subplots(figsize = (10,4))
-
-idx = np.asarray([i for i in range(len(years))])
-
-width = 0.2
-
-ax.bar(idx, [val for key,val in sorted(diabete.items())], width=width)
-ax.bar(idx+width, [val for key,val in sorted(not_diabete.items())], width=width)
-
-ax.set_xticks(idx)
-ax.set_xticklabels(years, rotation=65)
-ax.legend(['Diabete', 'Non-Diabete'])
-ax.set_xlabel('years')
-ax.set_ylabel('# of patients')
-
-fig.tight_layout()
-
+ 
+ 
+# 3
+x = np.random.uniform(0, 1, 100)
+y = np.random.uniform(0, 1, 100)
+ 
+ 
+plt.figure(figsize=(6, 6))
+plt.scatter(x, y, color='green', alpha=0.6)
+ 
+plt.xlabel("X значення")
+plt.ylabel("Y значення")
+plt.title("Точкова діаграма з рівномірним розподілом")
+plt.grid(True)
 plt.show()

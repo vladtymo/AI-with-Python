@@ -27,20 +27,20 @@ plt.title('Logistic Regression Predictions')
 plt.xlabel('GPA')
 plt.ylabel('Exam Score')    
 plt.colorbar(label='Predicted Class')
-plt.show()
+# plt.show()
 
 plt.scatter(X_test['GPA'], X_test['StudyHours'], c=y_pred, cmap='coolwarm', edgecolor='k', s=100)
 plt.title('Logistic Regression Predictions')
 plt.xlabel('GPA')
 plt.ylabel('Study Hours')    
 plt.colorbar(label='Predicted Class')
-plt.show()
+# plt.show()
 
 # 7. Передбачення для нових даних
 new_data = pd.DataFrame({
     'GPA': [3.5, 2.8],
-    'ExamScore': [85, 70],
-    'StudyHours': [10, 5]
+    'ExamScore': [85, 65],
+    'StudyHours': [10, 15]
 })
 predictions = model.predict(new_data)
 print("Predictions for new data:", predictions)

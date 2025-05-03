@@ -10,7 +10,7 @@ X = np.linspace(-20, 20, 40000).reshape(-1, 1)  # багато точок між
 Y = np.sin(X).flatten() + 0.1 * X.flatten() ** 2 + np.random.normal(0, 0.5, size=X.shape[0])
  
 # 3. Створюємо модель: Поліноміальна регресія ступеня 3
-degree = 2
+degree = 3
 model = make_pipeline(PolynomialFeatures(degree), LinearRegression())
  
 # 4. Навчаємо модель на всіх даних
@@ -32,9 +32,15 @@ plt.ylabel('y')
 plt.title('Real vs Predicted Function (-20 to 20)')
 plt.legend()
 plt.grid(True)
-plt.show()
+# plt.show()
  
 # 8. Передбачення для конкретної точки
 x_value = 7
 predicted_value = model.predict(np.array([[x_value]]))
 print(f"Predicted value at x={x_value}: {predicted_value[0]:.2f}")
+
+mae = mean_absolute_error(Y_test, model.predict(X_test))
+mse = mean_squared_error(Y_test, model.predict(X_test))
+
+print(f"Mean Absolute Error (MAE): {mae:.4f}") # MAE — середня абсолютна помилка. Показує середню відстань між передбаченим та реальним значеннями.
+print(f"Mean Squared Error (MSE): {mse:.4f}") # Коефіцієнт детермінації. Показує, яку частину варіації цільової змінної пояснює модель.

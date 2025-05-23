@@ -84,7 +84,7 @@ class NamesDataset(Dataset):
         return label_tensor, data_tensor, data_label, data_item
 
 
-alldata = NamesDataset("assets/names")
+alldata = NamesDataset("data/names")
 print(f"loaded {len(alldata)} items of data")
 print(f"example = {alldata[0]}")
 
@@ -132,6 +132,9 @@ print(label_from_output(output, alldata.labels_uniq))
 
 import random
 import numpy as np
+
+# model = torch.jit.load("./names_rnn.pt")
+# model.eval()
 
 
 def train(
@@ -190,12 +193,12 @@ def train(
     return all_losses
 
 
-torch.save(rnn.state_dict(), "./models/names_rnn.pt")
-
 start = time.time()
 all_losses = train(rnn, train_set, n_epoch=30, learning_rate=0.15, report_every=2)
 end = time.time()
 print(f"training took {end-start}s")
+
+torch.save(rnn.state_dict(), "./names_rnn.pt")
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker

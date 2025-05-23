@@ -84,7 +84,7 @@ class NamesDataset(Dataset):
         return label_tensor, data_tensor, data_label, data_item
 
 
-alldata = NamesDataset("data/names")
+alldata = NamesDataset("assets/names")
 print(f"loaded {len(alldata)} items of data")
 print(f"example = {alldata[0]}")
 
@@ -125,11 +125,10 @@ def label_from_output(output, output_labels):
     return output_labels[label_i], label_i
 
 
-input = lineToTensor("M")
+input = lineToTensor("Olha")
 output = rnn(input)  # this is equivalent to ``output = rnn.forward(input)``
 print(output)
 print(label_from_output(output, alldata.labels_uniq))
-
 
 import random
 import numpy as np
@@ -191,8 +190,10 @@ def train(
     return all_losses
 
 
+torch.save(rnn.state_dict(), "./models/names_rnn.pt")
+
 start = time.time()
-all_losses = train(rnn, train_set, n_epoch=1, learning_rate=0.15, report_every=5)
+all_losses = train(rnn, train_set, n_epoch=30, learning_rate=0.15, report_every=2)
 end = time.time()
 print(f"training took {end-start}s")
 
@@ -202,3 +203,13 @@ import matplotlib.ticker as ticker
 plt.figure()
 plt.plot(all_losses)
 plt.show()
+
+input = lineToTensor("Olha")
+output = rnn(input)  # this is equivalent to ``output = rnn.forward(input)``
+print(output)
+print(label_from_output(output, alldata.labels_uniq))
+
+input = lineToTensor("Kyryl")
+output = rnn(input)  # this is equivalent to ``output = rnn.forward(input)``
+print(output)
+print(label_from_output(output, alldata.labels_uniq))

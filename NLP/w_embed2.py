@@ -10,7 +10,7 @@ warnings.filterwarnings(action="ignore")
 
 
 #  Reads ‘alice.txt’ file
-sample = open("./text.txt")
+sample = open("./text.txt", "r", encoding="utf-8")
 s = sample.read()
 
 # Replaces escape character with space

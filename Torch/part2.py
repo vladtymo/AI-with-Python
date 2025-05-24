@@ -10,6 +10,7 @@ from torch.utils.data import Dataset
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 torch.set_default_device(device)
+print(f"Using device: {device}")
 
 # We can use "_" to represent an out-of-vocabulary character, that is, any character we are not handling in our model
 allowed_characters = string.ascii_letters + " .,;'" + "_"
@@ -125,11 +126,6 @@ def label_from_output(output, output_labels):
     return output_labels[label_i], label_i
 
 
-input = lineToTensor("Olha")
-output = rnn(input)  # this is equivalent to ``output = rnn.forward(input)``
-print(output)
-print(label_from_output(output, alldata.labels_uniq))
-
 import random
 import numpy as np
 
@@ -200,6 +196,9 @@ print(f"training took {end-start}s")
 
 torch.save(rnn.state_dict(), "./names_rnn.pt")
 
+# rnn.load_state_dict(torch.load("./names_rnn.pt"))
+# rnn.eval()
+
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
@@ -213,6 +212,12 @@ print(output)
 print(label_from_output(output, alldata.labels_uniq))
 
 input = lineToTensor("Kyryl")
-output = rnn(input)  # this is equivalent to ``output = rnn.forward(input)``
+output = rnn(input)
+print(output)
+print(label_from_output(output, alldata.labels_uniq))
+
+
+input = lineToTensor("Taras")
+output = rnn(input)
 print(output)
 print(label_from_output(output, alldata.labels_uniq))

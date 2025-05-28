@@ -2,7 +2,7 @@ import requests
 
 payload = {
     "model": "llama3.1:8b",
-    "prompt": "What is JS (short)?",
+    "prompt": "What is JS?",
     "stream": False,
 }
 

@@ -60,8 +60,6 @@ data2 = np.random.rand(len(years))
 diabete = {key: val for key,val in zip(years, data1)}
 not_diabete = {key: val for key,val in zip(years, data2)}
 
-
-
 ##the actual graph:
 fig, ax = plt.subplots(figsize = (10,4))
 
@@ -74,7 +72,7 @@ ax.bar(idx+width, [val for key,val in sorted(not_diabete.items())], width=width)
 
 ax.set_xticks(idx)
 ax.set_xticklabels(years, rotation=65)
-ax.legend(['Diabete', 'Non-Diabete'])e
+ax.legend(['Diabete', 'Non-Diabete'])
 ax.set_xlabel('years')
 ax.set_ylabel('# of patients')
 

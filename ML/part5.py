@@ -9,7 +9,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 
 # 1. Завантаження даних
-df = pd.read_csv("cars_plus.csv")
+df = pd.read_csv("./assets/cars_plus.csv")
 
 # 2. Створення нової ознаки: вік авто
 df['car_age'] = 2025 - df['year']

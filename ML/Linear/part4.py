@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 # Завантаження даних
-df = pd.read_csv("apartments_5000.csv")
+df = pd.read_csv("./assets/apartments_5000.csv")
 print(df.head())
 
 # Вибір ознак та цільової змінної
@@ -28,7 +28,7 @@ model.fit(X_train, y_train) # start supervised learning
 your_apartment = pd.DataFrame([{
     'area': 99,           # площа в м²
     'rooms': 7,           # кількість кімнат
-    'floor': 10,           # поверх
+    'floor': 10,          # поверх
     'year_built': 1982    # рік будівництва
 }])
 

@@ -11,7 +11,7 @@ Y = np.sin(X).flatten() + 0.1 * X.flatten() ** 2 + np.random.normal(0, 0.5, size
  
 # 3. Створюємо модель: Поліноміальна регресія ступеня 3
 degree = 3
-model = make_pipeline(PolynomialFeatures(degree), LinearRegression())
+model = make_pipeline(PolynomialFeatures(degree), LinearReegression())
  
 # 4. Навчаємо модель на всіх даних
 model.fit(X, Y)

@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, confusion_matrix
 
 # 1. Завантаження даних
-df = pd.read_csv('students.csv')
+df = pd.read_csv('./assets/students.csv')
 
 # 2. Вхідні та цільові змінні
 X = df[['GPA', 'ExamScore', 'StudyHours']]
@@ -27,14 +27,14 @@ plt.title('Logistic Regression Predictions')
 plt.xlabel('GPA')
 plt.ylabel('Exam Score')    
 plt.colorbar(label='Predicted Class')
-# plt.show()
+plt.show()
 
 plt.scatter(X_test['GPA'], X_test['StudyHours'], c=y_pred, cmap='coolwarm', edgecolor='k', s=100)
 plt.title('Logistic Regression Predictions')
 plt.xlabel('GPA')
 plt.ylabel('Study Hours')    
 plt.colorbar(label='Predicted Class')
-# plt.show()
+plt.show()
 
 # 7. Передбачення для нових даних
 new_data = pd.DataFrame({

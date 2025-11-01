@@ -11,7 +11,7 @@ Y = np.sin(X).flatten() + 0.1 * X.flatten() ** 2 + np.random.normal(0, 0.5, size
  
 # 3. Створюємо модель: Поліноміальна регресія ступеня 3
 degree = 3
-model = make_pipeline(PolynomialFeatures(degree), LinearReegression())
+model = make_pipeline(PolynomialFeatures(degree), LinearRegression())
  
 # 4. Навчаємо модель на всіх даних
 model.fit(X, Y)
@@ -32,7 +32,7 @@ plt.ylabel('y')
 plt.title('Real vs Predicted Function (-20 to 20)')
 plt.legend()
 plt.grid(True)
-# plt.show()
+plt.show()
  
 # 8. Передбачення для конкретної точки
 x_value = 7

@@ -42,7 +42,7 @@ result = model.wv.most_similar(
 print(result)
 
 
-# 📌 4. Візуалізація схожих слів (TSNE)
+# 4. Візуалізація схожих слів (TSNE)
 def visualize(model, target_word, topn=10):
     words = [target_word]
     embeddings = [model.wv[target_word]]

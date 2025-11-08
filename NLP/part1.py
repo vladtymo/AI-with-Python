@@ -9,7 +9,7 @@ from nltk.stem import PorterStemmer, WordNetLemmatizer
 # nltk.download("wordnet")  # Для лемматизації
 # nltk.download("omw-1.4")  # WordNet мовні дані
 
-# 📘 Вхідний текст
+# Вхідний текст
 text = "Cats are chasing mice. The weather was beautiful, and we went out to play!"
 # text = "Too small, would prefer a mat for a work surface that was anti static."
 

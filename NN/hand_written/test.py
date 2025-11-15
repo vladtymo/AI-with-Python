@@ -7,11 +7,11 @@ model = load_model("num_model.h5")
 
 # Load and preprocess the image
 img = Image.open("numbers/11.png").convert("L")  # Convert to grayscale
-img = img.resize((28, 28))                     # Resize to MNIST format
+img = img.resize((28, 28))  # Resize to MNIST format
 img = np.array(img)
-img = 255 - img                                # Invert (MNIST: white digit on black bg)
-img = img / 255.0                              # Normalize
-img = img.reshape(1, 784)                      # Flatten to (1, 784)
+img = 255 - img  # Invert (MNIST: white digit on black bg)
+img = img / 255.0  # Normalize
+img = img.reshape(1, 784)  # Flatten to (1, 784)
 
 # Optional: Display the image
 # import matplotlib.pyplot as plt

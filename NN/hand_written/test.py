@@ -6,7 +6,7 @@ import numpy as np
 model = load_model("num_model.h5")
 
 # Load and preprocess the image
-img = Image.open("numbers/11.png").convert("L")  # Convert to grayscale
+img = Image.open("./NN/hand_written/numbers/w66.png").convert("L")  # Convert to grayscale
 img = img.resize((28, 28))  # Resize to MNIST format
 img = np.array(img)
 img = 255 - img  # Invert (MNIST: white digit on black bg)
@@ -27,3 +27,10 @@ prediction = model.predict(img)
 
 for i in range(10):
     print(f"Probability of {i}: {prediction[0][i]:.4f}")
+
+# show image
+import matplotlib.pyplot as plt
+plt.imshow(img.reshape(28, 28), cmap="gray")
+plt.title("Prepared image")
+plt.axis("off")
+plt.show()

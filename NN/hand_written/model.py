@@ -33,7 +33,7 @@ from tensorflow.keras.layers import Dense
 model = Sequential(
     [
         Dense(
-            128, activation="relu", input_shape=(784,)
+            128, activation="relu", input_shape=(28*28,)
         ),  # Hidden layer with 128 neurons
         Dense(10, activation="softmax"),  # Output layer with 10 neurons
     ]

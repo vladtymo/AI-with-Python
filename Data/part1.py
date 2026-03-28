@@ -23,9 +23,9 @@ df = pd.DataFrame(data)
 print(df)
 
 # csv read
-df = pd.read_csv('apartments.csv')
+df = pd.read_csv('./assets/apartments.csv')
 
-df['age'] = 2025 - df['year_built'] # computed column
+df['age'] = 2026 - df['year_built'] # computed column
 
 df = df.sort_values(by='age', ascending=False) # sort by age
 
@@ -33,7 +33,7 @@ filtered_df = df[df['age'] > 10]
 print("Filtered: ", filtered_df)
 
 # csv write
-df.to_csv('output.csv', index=False)
+df.to_csv('./assets/apartaments_output.csv', index=False)
 
 # methods
 print("Head:")

@@ -11,8 +11,11 @@ X = iris.data  # 4 numeric features
 y = iris.target  # 3 classes
 
 # 2. Normalize features
+
+print("Original features:\n", X[:5])
 scaler = StandardScaler()
 X = scaler.fit_transform(X)
+print("Normalized features:\n", X[:5])
 
 # 3. Train/test split
 X_train, X_test, y_train, y_test = train_test_split(
@@ -45,5 +48,8 @@ model.evaluate(X_test, y_test)
 sample = np.array([[5.1, 3.5, 1.4, 0.2]])  # Example iris flower
 sample = scaler.transform(sample)  # Normalize
 pred_logits = model.predict(sample)
+
+print("Logits:", pred_logits)
+
 pred_class = np.argmax(pred_logits, axis=1)
 print("Predicted class:", pred_class)

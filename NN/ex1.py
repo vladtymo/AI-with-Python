@@ -25,7 +25,7 @@ X = np.random.rand(100, 2).astype("float32")
 y = (X[:, 0] * 3 + X[:, 1] * 2 + 1).astype("float32")  # simple formula
 
 # Train model
-model.fit(X, y, epochs=5)
+model.fit(X, y, epochs=50, batch_size=25)
 
 # Make a prediction
 example = np.array([[0.3, 0.8]])

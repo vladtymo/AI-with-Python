@@ -11,12 +11,19 @@ X = iris.data  # 4 numeric features
 y = iris.target  # 3 classes
 
 # 2. Normalize features
+
+print("Original features:\n", X[:5])
 scaler = StandardScaler()
 X = scaler.fit_transform(X)
+print("Normalized features:\n", X[:5])
+
+# Save scaler parameters for later use
+np.save("scaler_mean.npy", scaler.mean_)
+np.save("scaler_scale.npy", scaler.scale_)
 
 # 3. Train/test split
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
+    X, y, test_size=0.2, random_state=42 # 120 - train, 30 - test
 )
 
 # 4. Build simple numeric NN
@@ -36,10 +43,10 @@ model.compile(
 )
 
 # 6. Train
-model.fit(X_train, y_train, epochs=20, batch_size=8)
+model.fit(X_train, y_train, epochs=200, batch_size=8) # 120 samples, batch size 8 -> 15 steps per epoch
 
 # 7. Evaluate
-model.evaluate(X_test, y_test)
+model.evaluate(X_test, y_test) # 30 samples
 
 # 8. Make a prediction
 sample = np.array([[5.1, 3.5, 1.4, 0.2]])  # Example iris flower
@@ -49,4 +56,8 @@ pred_logits = model.predict(sample)
 print("Logits:", pred_logits)
 
 pred_class = np.argmax(pred_logits, axis=1)
+
 print("Predicted class:", pred_class, "->", iris.target_names[pred_class][0])
+
+# save model
+model.save("iris_model.h5")

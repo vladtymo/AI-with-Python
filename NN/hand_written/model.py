@@ -33,8 +33,11 @@ from tensorflow.keras.layers import Dense
 model = Sequential(
     [
         Dense(
-            128, activation="relu", input_shape=(28*28,)
+            128, activation="relu", input_shape=(28*28,) # Input layer with 784 neurons (28x28 pixels)
         ),  # Hidden layer with 128 neurons
+        Dense(
+            64, activation="relu" # Hidden layer with 64 neurons
+        ),
         Dense(10, activation="softmax"),  # Output layer with 10 neurons
     ]
 )
@@ -50,7 +53,7 @@ history = model.fit(
     x_train,
     y_train,
     epochs=10,
-    batch_size=32,
+    batch_size=64,
     validation_split=0.2,  # Use 20% of the training data for validation
 )
 

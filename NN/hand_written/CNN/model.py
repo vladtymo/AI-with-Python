@@ -6,6 +6,10 @@ import matplotlib.pyplot as plt
 # Load data
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
+# Normalize pixel values to [0, 1]
+x_train = x_train.astype('float32') / 255.0
+x_test = x_test.astype('float32') / 255.0
+
 # Reshape input to 28x28x1 for CNN
 x_train_cnn = x_train.reshape(-1, 28, 28, 1)
 x_test_cnn = x_test.reshape(-1, 28, 28, 1)
@@ -39,19 +43,19 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 early_stop = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
 
-model.fit(x_train_cnn, y_train_cat, epochs=20, validation_split=0.2, callbacks=[early_stop])
+model.fit(x_train_cnn, y_train_cat, epochs=5, validation_split=0.2, callbacks=[early_stop])
 
 model.save('num_cnn_model.h5')
 
-# test_loss, test_acc = model.evaluate(x_test, y_test_cat)
-# print("Test accuracy:", test_acc)
+test_loss, test_acc = model.evaluate(x_test_cnn, y_test_cat)
+print("Test accuracy:", test_acc)
 
 import numpy as np
 
 # Predict the first 5 test samples
-predictions = model.predict(x_test[:5])
+predictions = model.predict(x_test_cnn[:5])
 for i in range(5):
-    plt.imshow(x_test[i].reshape(28, 28), cmap="gray")
+    plt.imshow(x_test_cnn[i].reshape(28, 28), cmap="gray")
     plt.title(f"Predicted: {np.argmax(predictions[i])} - True: {y_test[i]}")
     plt.axis('off')
     plt.show()

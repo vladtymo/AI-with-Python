@@ -19,14 +19,14 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropou
 
 model = Sequential([
     Conv2D(32, 3, activation='relu', input_shape=(28,28,1)),
-    MaxPooling2D(2),
-    Dropout(0.25),
+    MaxPooling2D(2), # reduce spatial dimensions x
+    Dropout(0.25), # disable 25% of the neurons to prevent overfitting  
     Conv2D(64, 3, activation='relu'),
-    MaxPooling2D(2),
-    Dropout(0.25),
-    Flatten(),
+    MaxPooling2D(2), # reduce spatial dimensions
+    Dropout(0.25), # disable 25% of the neurons to prevent overfitting
+    Flatten(), # 2D to 1D
     Dense(128, activation='relu'),
-    Dropout(0.5),
+    Dropout(0.5), # disable 50% of the neurons to prevent overfitting
     Dense(10, activation='softmax')
 ])
 model.compile(
@@ -37,7 +37,7 @@ model.compile(
 
 from tensorflow.keras.callbacks import EarlyStopping
 
-early_stop = EarlyStopping(monitor='val_loss', patience=3)
+early_stop = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
 
 model.fit(x_train_cnn, y_train_cat, epochs=20, validation_split=0.2, callbacks=[early_stop])
 

@@ -10,9 +10,13 @@ iris = load_iris()
 X = iris.data  # 4 numeric features
 y = iris.target  # 3 classes
 
+print("Feature sample (raw):", X[0])
+
 # 2. Normalize features
 scaler = StandardScaler()
 X = scaler.fit_transform(X)
+
+print("Feature sample (normalized):", X[0])
 
 # 3. Train/test split
 X_train, X_test, y_train, y_test = train_test_split(

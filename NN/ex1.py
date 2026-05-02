@@ -19,16 +19,16 @@ model.summary()
 
 # Example numeric training data
 # X: 100 rows with 2 features
-X = np.random.rand(100, 2).astype("float32")
+X = np.random.rand(1000, 2).astype("float32")
 
 # y: target values
 y = (X[:, 0] * 3 + X[:, 1] * 2 + 1).astype("float32")  # simple formula
 
 # Train model
-model.fit(X, y, epochs=50, batch_size=25)
+model.fit(X, y, epochs=10)
 
 # Make a prediction
 example = np.array([[0.3, 0.8]])
-pred = model.predict(example)
+pred = model.predict(example) # 0.3 * 3 + 0.8 * 2 + 1 = 3.7
 
 print("Prediction:", pred)

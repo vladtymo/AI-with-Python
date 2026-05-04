@@ -4,13 +4,14 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 
 # Завантаження необхідних мовних ресурсів
-# nltk.download("punkt")  # Для токенізації
-# nltk.download("stopwords")  # Стоп-слова
-# nltk.download("wordnet")  # Для лемматизації
-# nltk.download("omw-1.4")  # WordNet мовні дані
+nltk.download("punkt")  # Для токенізації
+nltk.download("punkt_tab")  # Для токенізації речень
+nltk.download("stopwords")  # Стоп-слова
+nltk.download("wordnet")  # Для лемматизації
+nltk.download("omw-1.4")  # WordNet мовні дані
 
 # Вхідний текст
-text = "Cats are chasing mice. The weather was beautiful, and we went out to play!"
+text = "Dogs were running outside!"
 # text = "Too small, would prefer a mat for a work surface that was anti static."
 
 # --- 1. Токенізація ---
@@ -41,4 +42,4 @@ lemmatizer = WordNetLemmatizer()
 lemmatized_words = [lemmatizer.lemmatize(word.lower()) for word in filtered_words]
 print("Після лемматизації:", lemmatized_words)
 
-nltk.download()
+# nltk.download()

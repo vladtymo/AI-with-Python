@@ -1,7 +1,7 @@
 import requests
 
 payload = {
-    "model": "llama3.1:8b",
+    "model": "llama3.2:3b",
     "prompt": "What is JS?",
     "stream": False,
 }
@@ -14,5 +14,5 @@ print("Status code:", response.status_code)
 # print("Raw response:", response.text)
 
 data = response.json()
-print("\nResponse from LLaMA 3.1:")
+print("\nResponse from LLaMA 3.2:")
 print(data["response"])

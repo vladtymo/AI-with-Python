@@ -2,7 +2,7 @@ import requests
 import json
 
 payload = {
-    "model": "llama3.1:8b",
+    "model": "llama3.2:3b",
     "prompt": "What is JS language?",
     "stream": True,
 }
@@ -12,7 +12,7 @@ with requests.post(
 ) as response:
 
     print("Status code:", response.status_code)
-    print("\nResponse from LLaMA 3.1:")
+    print("\nResponse from LLaMA 3.2:")
 
     for line in response.iter_lines():
         if line:

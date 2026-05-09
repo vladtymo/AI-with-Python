@@ -22,11 +22,11 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 
 model = Sequential([
-    Conv2D(32, 3, activation='relu', input_shape=(28,28,1)),
-    MaxPooling2D(2), # reduce spatial dimensions x
+    Conv2D(16, 5, activation='relu', input_shape=(28,28,1)),
+    MaxPooling2D(3), # reduce spatial dimensions x
     Dropout(0.25), # disable 25% of the neurons to prevent overfitting  
-    Conv2D(64, 3, activation='relu'),
-    MaxPooling2D(2), # reduce spatial dimensions
+    Conv2D(32, 5, activation='relu'),
+    MaxPooling2D(3), # reduce spatial dimensions
     Dropout(0.25), # disable 25% of the neurons to prevent overfitting
     Flatten(), # 2D to 1D
     Dense(128, activation='relu'),

@@ -54,7 +54,7 @@ history = model.fit(
     y_train,
     epochs=10,
     batch_size=64,
-    validation_split=0.2,  # Use 20% of the training data for validation
+    # validation_split=0.2,  # Use 20% of the training data for validation
 )
 
 model.save("num_model.h5")
@@ -67,7 +67,7 @@ print(f"\nTest Accuracy: {test_accuracy:.4f}")
 # ---------- Visualize the Training Process ----------
 # Plot training & validation accuracy values
 plt.plot(history.history["accuracy"])
-plt.plot(history.history["val_accuracy"])
+plt.plot(test_accuracy, label="Test Accuracy", marker="o")
 plt.title("Model accuracy")
 plt.ylabel("Accuracy")
 plt.xlabel("Epoch")

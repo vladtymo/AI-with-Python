@@ -6,12 +6,12 @@ import numpy as np
 model = load_model("num_model.h5")
 
 # Load and preprocess the image
-img = Image.open("./NN/hand_written/numbers/w66.png").convert("L")  # Convert to grayscale
+img = Image.open("./NN/hand_written/numbers/7.png").convert("L")  # Convert to grayscale
 img = img.resize((28, 28))  # Resize to MNIST format
 img = np.array(img)
 # img = 255 - img  # Invert (MNIST: white digit on black bg)
 img = img / 255.0  # Normalize
-img = img.reshape(1, 784)  # Flatten to (1, 784)
+img = img.reshape(1, 28 * 28)  # Flatten to (1, 784)
 
 # Optional: Display the image
 # import matplotlib.pyplot as plt

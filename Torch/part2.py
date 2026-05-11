@@ -85,9 +85,11 @@ class NamesDataset(Dataset):
         return label_tensor, data_tensor, data_label, data_item
 
 
-alldata = NamesDataset("data/names")
+alldata = NamesDataset("./assets/names")
 print(f"loaded {len(alldata)} items of data")
 print(f"example = {alldata[0]}")
+
+input("Press Enter to split the dataset into train and validation sets...")
 
 train_set, test_set = torch.utils.data.random_split(
     alldata, [0.85, 0.15], generator=torch.Generator(device=device).manual_seed(2024)

@@ -2,8 +2,9 @@ from gensim.models import Word2Vec
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import re
+import numpy as np
 
-# 📌 1. Підготовка корпусу
+# 1. Підготовка корпусу
 corpus = [
     "Король живе в палаці.",
     "Королева є його дружиною.",
@@ -25,22 +26,21 @@ def preprocess(text):
 
 tokenized_corpus = [preprocess(sentence) for sentence in corpus]
 
-# 📌 2. Побудова моделі Word2Vec
+# 2. Побудова моделі Word2Vec
 model = Word2Vec(
     sentences=tokenized_corpus, vector_size=100, window=3, min_count=1, workers=4
 )
 model.save("model_w2v.model")
 
-# 📌 3. Аналіз
-print("\n🔍 Схожі до 'жінка':")
+# 3. Аналіз
+print("\nСхожі до 'жінка':")
 print(model.wv.most_similar("жінка", topn=5))
 
-print("\n🧮 Семантична арифметика (король - чоловік + жінка):")
+print("\nСемантична арифметика (король - чоловік + жінка):")
 result = model.wv.most_similar(
-    positive=["король", "жінка"], negative=["чоловік"], topn=3
+    positive=["король", "жінка"], negative=["чоловік"], topn=1
 )
 print(result)
-
 
 # 4. Візуалізація схожих слів (TSNE)
 def visualize(model, target_word, topn=10):
@@ -52,6 +52,7 @@ def visualize(model, target_word, topn=10):
         embeddings.append(model.wv[word])
 
     tsne = TSNE(n_components=2, random_state=0, perplexity=5)
+    embeddings = np.array(embeddings)
     reduced = tsne.fit_transform(embeddings)
 
     plt.figure(figsize=(8, 6))
@@ -65,3 +66,5 @@ def visualize(model, target_word, topn=10):
 
 
 visualize(model, "жінка")
+visualize(model, "чоловік")
+

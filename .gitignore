@@ -5,3 +5,5 @@
 /llama-env
 /tempCodeRunnerFile.py
 .DS_Store
+node_modules
+# .env

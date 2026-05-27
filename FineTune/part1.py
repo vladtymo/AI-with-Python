@@ -1,3 +1,4 @@
+import torch
 from datasets import load_dataset
 from transformers import (
     AutoTokenizer,
@@ -8,23 +9,45 @@ from transformers import (
 )
 from peft import LoraConfig, get_peft_model, TaskType
 
-# === Config ===
-MODEL_ID = "meta-llama/Meta-Llama-3-1B"
-DATASET_PATH = "my_data.jsonl"
+# pip install torch transformers datasets peft accelerate bitsandbytes sentencepiece
 
-# === Load model and tokenizer ===
+# ============================================
+# CONFIG
+# ============================================
+
+MODEL_ID = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+DATASET_PATH = "my_data.jsonl"
+OUTPUT_DIR = "./finetuned-tinyllama-1.1b-chat"
+
+# ============================================
+# LOAD TOKENIZER
+# ============================================
+
 tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
+
+# Llama models usually don't have pad token
+tokenizer.pad_token = tokenizer.eos_token
+
+# ============================================
+# LOAD MODEL
+# ============================================
+
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_ID,
     device_map="auto",
-    load_in_8bit=True,  # set False if on CPU or no bitsandbytes
+    #load_in_8bit=torch.cuda.is_available(),  # use 8bit only on GPU
 )
 
-# === LoRA configuration ===
+model.config.pad_token_id = tokenizer.pad_token_id
+
+# ============================================
+# LoRA CONFIG
+# ============================================
+
 lora_config = LoraConfig(
     r=8,
     lora_alpha=16,
-    target_modules=["q_proj", "v_proj"],  # depends on model architecture
+    target_modules=["q_proj", "v_proj"],
     lora_dropout=0.05,
     bias="none",
     task_type=TaskType.CAUSAL_LM,
@@ -32,43 +55,100 @@ lora_config = LoraConfig(
 
 model = get_peft_model(model, lora_config)
 
-# === Load dataset ===
-dataset = load_dataset("json", data_files=DATASET_PATH, split="train")
+# Show trainable params
+model.print_trainable_parameters()
 
+# ============================================
+# LOAD DATASET
+# ============================================
 
-# === Preprocess ===
+dataset = load_dataset(
+    "json",
+    data_files=DATASET_PATH,
+    split="train",
+)
+
+# ============================================
+# PREPROCESS
+# ============================================
+
 def format_example(example):
-    prompt = f"### Instruction:\n{example['instruction']}\n\n### Response:\n{example['response']}"
-    tokens = tokenizer(prompt, truncation=True, padding="max_length", max_length=512)
+
+    prompt = (
+        f"### Instruction:\n"
+        f"{example['instruction']}\n\n"
+        f"### Response:\n"
+        f"{example['response']}"
+    )
+
+    tokens = tokenizer(
+        prompt,
+        truncation=True,
+        padding="max_length",
+        max_length=512,
+    )
+
     tokens["labels"] = tokens["input_ids"].copy()
+
     return tokens
 
 
-dataset = dataset.map(format_example)
+dataset = dataset.map(
+    format_example,
+    remove_columns=dataset.column_names,
+)
 
-# === Training args ===
-args = TrainingArguments(
-    output_dir="./finetuned-llama-1b",
-    per_device_train_batch_size=2,
-    gradient_accumulation_steps=4,
+# ============================================
+# TRAINING ARGS
+# ============================================
+
+training_args = TrainingArguments(
+    output_dir=OUTPUT_DIR,
+
+    per_device_train_batch_size=1,
+    gradient_accumulation_steps=8,
+
     num_train_epochs=3,
+
+    learning_rate=2e-4,
+
     logging_steps=10,
     save_steps=200,
-    fp16=True,
+
+    fp16=torch.cuda.is_available(),
+
     report_to="none",
+
+    save_total_limit=2,
 )
+
+# ============================================
+# TRAINER
+# ============================================
 
 trainer = Trainer(
     model=model,
-    args=args,
+    args=training_args,
     train_dataset=dataset,
-    tokenizer=tokenizer,
-    data_collator=DataCollatorForLanguageModeling(tokenizer, mlm=False),
+    # tokenizer=tokenizer,
+    data_collator=DataCollatorForLanguageModeling(
+        tokenizer=tokenizer,
+        mlm=False,
+    ),
 )
 
-# === Train ===
+# ============================================
+# TRAIN
+# ============================================
+
 trainer.train()
 
-# === Save ===
-model.save_pretrained("./finetuned-llama-1b")
-tokenizer.save_pretrained("./finetuned-llama-1b")
+# ============================================
+# SAVE MODEL
+# ============================================
+
+model.save_pretrained(OUTPUT_DIR)
+tokenizer.save_pretrained(OUTPUT_DIR)
+
+print("\nTraining completed.")
+print(f"Model saved to: {OUTPUT_DIR}")

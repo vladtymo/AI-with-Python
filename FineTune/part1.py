@@ -3,6 +3,7 @@ from datasets import load_dataset
 from transformers import (
     AutoTokenizer,
     AutoModelForCausalLM,
+    BitsAndBytesConfig,
     TrainingArguments,
     Trainer,
     DataCollatorForLanguageModeling,
@@ -32,10 +33,14 @@ tokenizer.pad_token = tokenizer.eos_token
 # LOAD MODEL
 # ============================================
 
+quant_config = BitsAndBytesConfig(
+    load_in_8bit=torch.cuda.is_available()
+)
+
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_ID,
     device_map="auto",
-    #load_in_8bit=torch.cuda.is_available(),  # use 8bit only on GPU
+    quantization_config=quant_config,
 )
 
 model.config.pad_token_id = tokenizer.pad_token_id
